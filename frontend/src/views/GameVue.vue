@@ -5,7 +5,7 @@
 			Game
 		</div>
 
-		<!-- Menu gry/Starting Page coś takiego-->
+
 		<div v-if="!gameStarted">
 			<div class="menu-buttons">
 				<button @click="startGame" class="aqua menu-button">Start</button>
@@ -17,7 +17,7 @@
 			</div>
 		</div>
 
-		<!-- Po wystartowaniu gry-->
+
 		<div v-else-if="!gameOver">
 			<p style="color: gold">
 				Streak: <span style="color: red">{{ streakPoints }}</span>
@@ -51,7 +51,7 @@
 			</p>
 		</div>
 
-		<!-- Zakończenie gry -->
+
 		<div v-if="gameOver && streakPoints > 0">
 			<h2>Game Over</h2>
 			<p>
@@ -88,27 +88,9 @@
 </template>
 <script>
 import axios from "axios";
-//import { watchEffect, ref } from "vue";
+
 export default {
-	//do testu ten setup tylko potem usune
-	/* setup() {
-		const user = ref(JSON.parse(localStorage.getItem("user")) || null);
-		const accessToken = ref(localStorage.getItem("accessToken") || null);
-		const refreshToken = ref(localStorage.getItem("refreshToken") || null);
-
-		setInterval(() => {
-			user.value = JSON.parse(localStorage.getItem("user")) || null;
-			accessToken.value = localStorage.getItem("accessToken") || null;
-			refreshToken.value = localStorage.getItem("refreshToken") || null;
-		}, 1000);
-
-		watchEffect(() => {
-			console.log("User data:", user.value);
-			console.log("Access Token:", accessToken.value);
-			console.log("Refresh Token:", refreshToken.value);
-		});
-	}, */
-	//dotąd usuwaj
+	
 	data() {
 		return {
 			moves: ["rock", "paper", "scissors"],
@@ -136,19 +118,18 @@ export default {
 			this.gameStarted = true;
 		},
 		logout() {
-			// Usuń dane użytkownika z localStorage
+			
 			localStorage.removeItem("user");
 			localStorage.removeItem("accessToken");
 			localStorage.removeItem("refreshToken");
-			// Ustaw dane na null to też do testów mam
+			
 			this.user = null;
 			this.accessToken = null;
 			this.refreshToken = null;
 
-			// Ustaw flagę isUserLoggedIn na false
+		
 			this.isUserLoggedIn = false;
 
-			// Przekieruj użytkownika do strony logowania
 			this.$router.push("/");
 		},
 		makeMove(move) {
@@ -198,13 +179,13 @@ ${this.streakPoints}`);
 					window.location.reload();
 				})
 				.catch((error) => {
-					console.error("NIE DZIAŁA XD", error);
+					console.error("IT DOESN'T WORK", error);
 				});
 		},
 	},
 	watch: {
 		streakPoints(newVal) {
-			console.log("Streak teraz:", newVal);
+			console.log("Streak now:", newVal);
 		},
 	},
 };

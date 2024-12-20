@@ -42,7 +42,7 @@ export default {
 		function goToRegister() {
 			router.push("/register");
 		}
-		//jesli przechodzimy z udanego rejestrowania to przekazuje nam username do forma
+		
 		onMounted(() => {
 			if (route.query.username) {
 				loginForm.username = route.query.username;
@@ -56,8 +56,6 @@ export default {
 				const response = await axios.post("http://localhost:8000/api/login/", formData);
 
 				if (response.data.success) {
-					console.log("Logowanie udane");
-					// Zapisz dane użytkownika w localStorage
 					const accessToken = response.data.access_token;
 					const refreshToken = response.data.refresh_token;
 					localStorage.setItem("user", JSON.stringify(response.data));
@@ -65,16 +63,16 @@ export default {
 					localStorage.setItem("refreshToken", refreshToken);
 					router.push("/");
 				} else {
-					console.error("Błąd logowania:", response.data.message, response.data.errors);
+					console.error("Login error:", response.data.message, response.data.errors);
 					errorMessage.value = response.data.message;
 				}
 			} catch (error) {
-				console.error("Błąd wysyłania danych:", error);
+				console.error("Error sending data:", error);
 				if (error.response) {
-					// Serwer zwrócił błąd, odczytaj komunikat o błędzie z odpowiedzi
+					
 					errorMessage.value = error.response.data.message;
 				} else {
-					// Inny błąd, np. problem z siecią
+					
 					errorMessage.value = "Failed to send data to server";
 				}
 			}

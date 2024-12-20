@@ -36,7 +36,7 @@ def submit_score(request):
 @api_view(['GET'])
 def scoreboard(request):
     scores = PlayerScore.objects.values('player_name').annotate(max_score=Max('score')).order_by('-max_score')
-    scores_list = list(scores)  # important: convert the QuerySet to a list object
+    scores_list = list(scores)  
     return JsonResponse(scores_list, safe=False)
 
 class RegisterUserView(APIView):
@@ -49,9 +49,9 @@ class RegisterUserView(APIView):
                     email=serializer.validated_data['email'],
                     password=serializer.validated_data['password'],
                 )
-                # Tutaj możesz zapisywać dodatkowe pola jak 'terms' i 'location' w zależności od twojego modelu użytkownika
+               
 
-                return Response({'success': True, 'message': 'Rejestracja udana'}, status=status.HTTP_201_CREATED)
+                return Response({'success': True, 'message': 'Registration successful'}, status=status.HTTP_201_CREATED)
             except IntegrityError:
                 return Response({'success': False, 'message': 'Username is already taken'}, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -64,13 +64,10 @@ class UserLoginView(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             
-            # Sprawdź użytkownika i hasło
-            # Jeśli są poprawne, wygeneruj tokeny JWT
-            # Przykładowa logika logowania
+        
             user = authenticate(username=serializer.validated_data['username'], password=serializer.validated_data['password'])
             if user:
-                print(f"Attempting login for user: {serializer.validated_data['username']}")  # debug
-
+                print(f"Attempting login for user: {serializer.validated_data['username']}") 
                 refresh = RefreshToken.for_user(user)
                 access_token = str(refresh.access_token)
                 refresh_token = str(refresh)

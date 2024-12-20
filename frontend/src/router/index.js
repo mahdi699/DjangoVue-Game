@@ -29,7 +29,7 @@ const routes = [
 		name: "ReportBug",
 		component: ReportBug,
 	},
-	//ściezka wildcard, przekierowuje na stronę główną
+	
 	{ path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 
@@ -38,11 +38,10 @@ const router = createRouter({
 	routes,
 });
 router.beforeEach((to, from, next) => {
-	// Sprawdź, czy użytkownik jest zalogowany
+	
 	const loggedIn = localStorage.getItem("user");
 
-	// Jeśli użytkownik próbuje uzyskać dostęp do strony logowania lub rejestracji, a jest już zalogowany,
-	// przekieruj go na stronę główną
+	
 	if ((to.path === "/login" || to.path === "/register") && loggedIn) {
 		next("/");
 	} else {
@@ -51,3 +50,4 @@ router.beforeEach((to, from, next) => {
 });
 
 export default router;
+	

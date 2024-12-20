@@ -120,7 +120,7 @@ export default {
 					path: "/login",
 					query: {
 						username: submittedData.value.username,
-						//hasła nie przekazujemy bo to trohce nie na miejscu XD
+						
 					},
 				});
 			} else {
@@ -147,8 +147,6 @@ export default {
 			}
 
 			console.log("Form is valid", form);
-			/* const formData = toRaw(form); */
-			//const { confirmPassword, ...formData } = toRaw(form);
 			let formData = toRaw(form);
 			delete formData.confirmPassword;
 
@@ -157,16 +155,15 @@ export default {
 
 				if (response.data.success) {
 					submittedData.value = toRaw(form);
-					console.log("Rejestracja udana");
 					errorMessage.value = null;
 				} else {
-					console.error("Błąd rejestracji:", response.data.message);
+					console.error("Registration error:", response.data.message);
 					errorMessage.value = response.data.message;
 				}
 			} catch (error) {
-				console.error("Błąd wysyłania danych:", error);
+				console.error("Error sending data:", error);
 				if (error.response && error.response.data) {
-					// Jeśli serwer zwróci konkretną wiadomośc to pokaże ją NIE ZAPOMNIJ ŻE TO TUTAJ
+					
 					errorMessage.value = error.response.data.message;
 				} else {
 					errorMessage.value = "Registration failed, try again later";
